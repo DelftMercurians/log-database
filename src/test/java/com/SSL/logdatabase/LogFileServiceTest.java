@@ -33,12 +33,15 @@ class LogFileServiceTest {
 
     @Test
     void getLogFileData() {
-        System.out.println(fileName);
-        byte[] res = logFileService.getLogFileData(1L);
+
+        byte[] res = logFileService.getLogFileData(0L);
         assertNull(res);
 
         Long id = logFileService.saveLogFileData(fileName, fileData);
         res = logFileService.getLogFileData(id);
+        assertNotNull(res);
+
+        res = logFileService.getLogFileDataByName("test.log");
         assertNotNull(res);
 
     }

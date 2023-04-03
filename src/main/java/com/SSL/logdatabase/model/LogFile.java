@@ -1,6 +1,7 @@
 package com.SSL.logdatabase.model;
 
 import jakarta.persistence.*;
+import org.springframework.lang.NonNull;
 
 @Entity
 public class LogFile {
@@ -8,46 +9,40 @@ public class LogFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fileName;
+    private String file_name;
+
 
     @Lob
-    private byte[] fileData;
+    private byte[] file_data;
 
     public LogFile() {
     }
 
     public LogFile(String fileName, byte[] fileData) {
-        this.fileName = fileName;
-        this.fileData = fileData;
+        this.file_name = fileName;
+        this.file_data = fileData;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getFileName() {
-        return fileName;
+        return file_name;
     }
 
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+        this.file_name = fileName;
     }
 
     public byte[] getFileData() {
-        return fileData;
+        return file_data;
     }
 
     public void setFileData(byte[] fileData) {
-        this.fileData = fileData;
+        this.file_data = fileData;
     }
 
-    @Override
-    public String toString() {
-        return fileName + "\n";
-    }
+
 
 }
