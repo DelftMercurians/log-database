@@ -9,9 +9,12 @@ import java.util.Optional;
 
 @Service
 public class LogFileService {
-    @Autowired
+
     private LogFileRepository logFileRepository;
 
+    public LogFileService(LogFileRepository logFileRepository) {
+        this.logFileRepository = logFileRepository;
+    }
     public byte[] getLogFileData(Long id) {
         Optional<LogFile> logFile = logFileRepository.findById(id);
         if (logFile.isPresent()) {
@@ -28,6 +31,14 @@ public class LogFileService {
         }
         return null;
     }
+
+    public List<String> searchLogFileData(String fileName) {
+        List<LogFile> logFile = logFileRepository.findAll();
+        List<String> res = logFile.stream().filter(l -> l.getFileName().contains(fileName))
+                .map(l -> l.getFileName()).toList();
+        return res;
+    }
+
     public Long saveLogFileData(String fileName, byte[] fileData) {
         LogFile logFile = new LogFile(fileName, fileData);
         logFileRepository.save(logFile);

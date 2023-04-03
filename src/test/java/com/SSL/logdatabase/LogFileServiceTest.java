@@ -4,31 +4,29 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 class LogFileServiceTest {
 
-    private String path;
     private String fileName;
     private byte[] fileData;
 
-    @Autowired
     private LogFileService logFileService;
 
     @BeforeEach
     void setUp() throws IOException {
-        String path = "./src/test/java/com/SSL/logdatabase/test.log";
-        String fileName = "test.log";
-        byte[] fileData = Files.readAllBytes(Path.of(path));
-        this.path = path;
-        this.fileName = fileName;
-        this.fileData = fileData;
+        this.fileName = "testovo.log";
+        //assign byte array to fileData
+        this.fileData = this.fileName.getBytes(StandardCharsets.UTF_8);
+        this.logFileService = new LogFileService(new LogFileTestRepository());
     }
 
     @Test
@@ -41,7 +39,15 @@ class LogFileServiceTest {
         res = logFileService.getLogFileData(id);
         assertNotNull(res);
 
-        res = logFileService.getLogFileDataByName("test.log");
+    }
+
+    @Test
+    void getLogFileDataByName() {
+        byte[] res = logFileService.getLogFileDataByName(fileName);
+        assertNull(res);
+
+        Long id = logFileService.saveLogFileData(fileName, fileData);
+        res = logFileService.getLogFileDataByName(fileName);
         assertNotNull(res);
 
     }

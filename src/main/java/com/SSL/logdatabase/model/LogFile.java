@@ -1,7 +1,6 @@
 package com.SSL.logdatabase.model;
 
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
 
 @Entity
 public class LogFile {

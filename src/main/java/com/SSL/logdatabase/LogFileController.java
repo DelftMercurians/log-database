@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/logfiles")
@@ -26,4 +27,10 @@ public class LogFileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
                 .body(fileData);
     }
+
+    /**
+    @GetMapping("/search")
+    public ResponseEntity<List<String>> searchLogFileData(@RequestBody String filename) {
+
+    }**/
 }
