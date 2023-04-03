@@ -8,9 +8,11 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,9 +48,18 @@ class LogFileServiceTest {
         byte[] res = logFileService.getLogFileDataByName(fileName);
         assertNull(res);
 
-        Long id = logFileService.saveLogFileData(fileName, fileData);
+        logFileService.saveLogFileData(fileName, fileData);
         res = logFileService.getLogFileDataByName(fileName);
         assertNotNull(res);
-
     }
+
+    @Test
+    void searchLogFileDataByName() {
+        assertEquals(new ArrayList<>(),logFileService.searchLogFileData(fileName));
+        logFileService.saveLogFileData(fileName, fileData);
+        logFileService.saveLogFileData("testqwq2.log", fileData);
+        logFileService.saveLogFileData("another.log", fileData);
+        assertEquals(2, logFileService.searchLogFileData("test").size());
+    }
+
 }

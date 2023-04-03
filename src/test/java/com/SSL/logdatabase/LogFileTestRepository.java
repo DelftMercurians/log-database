@@ -110,6 +110,12 @@ public class LogFileTestRepository implements LogFileRepository{
 
     @Override
     public <S extends LogFile> S save(S entity) {
+        List<Long>ids = new ArrayList<>(db.keySet());
+        if(ids.size() == 0) {
+            entity.setId(1L);
+        } else {
+            entity.setId(Collections.max(ids) + 1);
+        }
         db.put(entity.getId(), entity);
         return entity;
     }

@@ -28,9 +28,14 @@ public class LogFileController {
                 .body(fileData);
     }
 
-    /**
+
     @GetMapping("/search")
     public ResponseEntity<List<String>> searchLogFileData(@RequestBody String filename) {
-
-    }**/
+        List<String> fileNames = logFileService.searchLogFileData(filename);
+        if (fileNames.size() == 0) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok()
+                .body(fileNames);
+    }
 }
